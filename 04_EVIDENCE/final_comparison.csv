@@ -1,0 +1,25 @@
+id,category,baseline_result,baseline_grounding,improved_result,improved_grounding
+q01,direct,correct,grounded,correct,grounded
+q02,direct,correct,grounded,correct,grounded
+q03,direct,correct,grounded,correct,grounded
+q04,direct,correct,UNGROUNDED(leak),correct,grounded
+q05,direct,correct,grounded,correct,grounded
+q06,paraphrased,correct,grounded,correct,grounded
+q07,paraphrased,correct,UNGROUNDED(leak),correct,grounded
+q08,paraphrased,correct,grounded,correct,grounded
+q09,paraphrased,correct,UNGROUNDED(leak),INCORRECT(abstain),n/a
+q10,paraphrased,correct,grounded,correct,grounded
+q11,multi_document,INCORRECT(abstain),n/a,INCORRECT(abstain),n/a
+q12,multi_document,correct,grounded,correct,grounded
+q13,multi_document,correct,grounded,correct,grounded
+q14,multi_document,INCORRECT(abstain),n/a,INCORRECT(abstain),n/a
+q15,version_sensitive,correct,MIXED(partial leak),INCORRECT(abstain),n/a
+q16,version_sensitive,INCORRECT(abstain),n/a,INCORRECT(abstain),n/a
+q17,version_sensitive,correct,grounded,correct,grounded
+q18,version_sensitive,correct,grounded,correct,grounded
+q19,unanswerable,correct(abstain),n/a,correct(abstain),n/a
+q20,unanswerable,correct(abstain),n/a,correct(abstain),n/a
+q21,unanswerable,correct(abstain),n/a,correct(abstain),n/a
+q22,unanswerable,correct(abstain),n/a,correct(abstain),n/a
+q23,distractor,correct(abstain),n/a,correct(abstain),n/a
+q24,distractor,correct(abstain),n/a,correct(abstain),n/a

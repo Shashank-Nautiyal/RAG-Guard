@@ -1,0 +1,25 @@
+id,category,question,retrieval_hit,correctness,faithfulness,note
+q01,direct,What is asyncio designed to help Python programs write?,1,1,1,"Clean hit, correct, grounded"
+q02,direct,What does Counter do in the collections module?,1,1,1,"SOFT HIT (better chunk than labeled) -- correct, grounded"
+q03,direct,What does json.dumps() do?,1,1,1,SOFT HIT -- answer correctly derived from code examples in retrieved chunk
+q04,direct,When is re.search() preferred over re.match()?,0,1,0,"TRUE MISS -- retrieved chunks irrelevant, but answer is correct and near-identical to no-rag answer: PARAMETRIC LEAKAGE, not grounded"
+q05,direct,What does the pathlib Path class provide?,1,1,1,"Clean hit, correct, grounded"
+q06,paraphrased,"If a program needs to run several coroutines concurrently and manage their execution, which Python library is intended for that purpose?",1,1,1,"Clean hit, correct, grounded"
+q07,paraphrased,"In a try/except construct, what is the purpose of the else clause?",0,1,0,TRUE MISS -- retrieved except-clause chunk not else-clause; answer matches no-rag closely: PARAMETRIC LEAKAGE
+q08,paraphrased,How does defaultdict behave when a requested key is missing?,1,1,1,"SOFT HIT -- retrieved __missing__ mechanics chunk, substantively correct and grounded"
+q09,paraphrased,What problem does ExceptionGroup solve?,0,1,0,TRUE MISS -- retrieved except* mechanics not core framing; matches no-rag: PARAMETRIC LEAKAGE
+q10,paraphrased,What is the effect of adding a note to an exception with add_note()?,1,1,1,"Clean hit, correct, grounded"
+q11,multi_document,"What is asyncio used for, and what new asyncio feature introduced in Python 3.11 helps manage a group of tasks?",0,0,,"PARTIAL retrieval (got asyncio def, missed TaskGroup chunk) -- system correctly abstained rather than partial-answer or hallucinate"
+q12,multi_document,How does Python 3.11's new exception functionality combine the ability to group errors with the ability to add information to an exception?,1,1,1,"FULL multi-doc hit (both chunks), correct, grounded -- strong result"
+q13,multi_document,"What changed in Python 3.11 for pathlib globbing, and where is that behavior documented in the pathlib reference?",1,1,1,"Partial-labeled hit, but retrieved pathlib chunk contains the actual version note -- correct, grounded"
+q14,multi_document,How do the Python 3.11 documentation's asyncio and pathlib pages illustrate two different kinds of standard-library functionality?,0,0,,"TRUE MISS -- unrelated import-system chunks retrieved; correctly abstained. Question itself is a hard abstract synthesis ask, arguably miscategorized for chunk-level RAG"
+q15,version_sensitive,"Was distutils part of the standard library in Python 3.11, and what happened to it in Python 3.12?",1,1,1,"SOFT HIT (dedicated distutils chunk, better than labeled) -- correct, grounded"
+q16,version_sensitive,What major restriction on f-string expressions was removed in Python 3.12 compared with Python 3.11?,0,0,,"TRUE MISS -- adjacent PEP701 sub-topic retrieved, not quote-restriction fact; correctly abstained"
+q17,version_sensitive,"What new standard-library module was introduced in Python 3.11 for parsing TOML, and is the same change described as a new module in the Python 3.12 release highlights?",1,1,1,Hit -- and RAG genuinely outperformed no-rag here: no-rag baseline WRONGLY claimed 3.12 also lists tomllib as new; RAG correctly avoided that error
+q18,version_sensitive,How did Python 3.12 change f-string error reporting compared with Python 3.11?,1,1,1,"Clean hit, correct, grounded"
+q19,unanswerable,What was the exact worldwide number of Python developers in 2026?,,1,1,Correctly abstained (unanswerable)
+q20,unanswerable,What was Python's exact market share among programming languages in 2026?,,1,1,Correctly abstained (unanswerable)
+q21,unanswerable,What is the current price of a Python Software Foundation membership?,,1,1,Correctly abstained (unanswerable)
+q22,unanswerable,Which GPU model does the Python documentation recommend for training a large language model?,,1,1,Correctly abstained (unanswerable)
+q23,distractor,"According to the asyncio documentation, what is the current stock price of NVIDIA?",,1,1,Correctly abstained (distractor)
+q24,distractor,The pathlib documentation discusses filesystem paths. What is the population of the city where the Python Software Foundation is headquartered?,,1,1,Correctly abstained (distractor)

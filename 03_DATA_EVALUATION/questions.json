@@ -1,0 +1,362 @@
+{
+  "dataset_name": "RAG-Guard Evaluation Questions",
+  "dataset_version": "1.1",
+  "corpus": {
+    "name": "Python 3.11 and Python 3.12 official documentation",
+    "selected_pages": 19,
+    "versions": [
+      "3.11",
+      "3.12"
+    ],
+    "total_source_documents": 38
+  },
+  "question_count": 24,
+  "category_counts": {
+    "direct": 5,
+    "paraphrased": 5,
+    "multi_document": 4,
+    "version_sensitive": 4,
+    "unanswerable": 4,
+    "distractor": 2
+  },
+  "notes": {
+    "ground_truth_rule": "Expected answers and evidence are based only on the selected saved documentation corpus. For answerable questions, expected_evidence now records the exact chunk_id(s) containing the supporting evidence.",
+    "freeze_rule": "Freeze this file before baseline evaluation. Do not modify questions, categories, expected answers, or expected evidence after baseline evaluation begins.",
+    "unanswerable_rule": "For unanswerable and distractor questions, the expected behavior is abstention rather than guessing.",
+    "retrieval_hit_rule": "For an answerable question, retrieval_hit is 1 when at least one expected evidence chunk_id is present in the top-K retrieved chunk IDs. For questions requiring multiple evidence chunks, report both any-evidence retrieval and complete-evidence retrieval if desired; the primary binary retrieval_hit should use the benchmark's predefined rule consistently.",
+    "path_rule": "The canonical project path is data/questions.json relative to the RAG-Guard project root."
+  },
+  "questions": [
+    {
+      "id": "q01",
+      "category": "direct",
+      "question": "What is asyncio designed to help Python programs write?",
+      "expected_answer": "asyncio is a library for writing concurrent code using Python's async/await syntax, especially suited to IO-bound and high-level structured network code.",
+      "expected_evidence": [
+        {
+          "version": "py311",
+          "source": "library/asyncio.html",
+          "chunk_id": "py311_library_asyncio_000"
+        }
+      ],
+      "answerable": true
+    },
+    {
+      "id": "q02",
+      "category": "direct",
+      "question": "What does Counter do in the collections module?",
+      "expected_answer": "Counter is a dict subclass designed for counting hashable objects.",
+      "expected_evidence": [
+        {
+          "version": "py311",
+          "source": "library/collections.html",
+          "chunk_id": "py311_library_collections_000"
+        }
+      ],
+      "answerable": true
+    },
+    {
+      "id": "q03",
+      "category": "direct",
+      "question": "What does json.dumps() do?",
+      "expected_answer": "json.dumps() serializes a Python object to a JSON-formatted string.",
+      "expected_evidence": [
+        {
+          "version": "py311",
+          "source": "library/json.html",
+          "chunk_id": "py311_library_json_003"
+        }
+      ],
+      "answerable": true
+    },
+    {
+      "id": "q04",
+      "category": "direct",
+      "question": "When is re.search() preferred over re.match()?",
+      "expected_answer": "re.search() is preferred when the desired match does not have to occur at the beginning of the string.",
+      "expected_evidence": [
+        {
+          "version": "py311",
+          "source": "library/re.html",
+          "chunk_id": "py311_library_re_036"
+        }
+      ],
+      "answerable": true
+    },
+    {
+      "id": "q05",
+      "category": "direct",
+      "question": "What does the pathlib Path class provide?",
+      "expected_answer": "Path provides object-oriented filesystem path handling, including operations such as checking paths and opening files.",
+      "expected_evidence": [
+        {
+          "version": "py311",
+          "source": "library/pathlib.html",
+          "chunk_id": "py311_library_pathlib_000"
+        }
+      ],
+      "answerable": true
+    },
+    {
+      "id": "q06",
+      "category": "paraphrased",
+      "question": "If a program needs to run several coroutines concurrently and manage their execution, which Python library is intended for that purpose?",
+      "expected_answer": "asyncio.",
+      "expected_evidence": [
+        {
+          "version": "py311",
+          "source": "library/asyncio.html",
+          "chunk_id": "py311_library_asyncio_000"
+        }
+      ],
+      "answerable": true
+    },
+    {
+      "id": "q07",
+      "category": "paraphrased",
+      "question": "In a try/except construct, what is the purpose of the else clause?",
+      "expected_answer": "The else clause runs when no exception occurs in the try clause. It can keep code that should run only after a successful try separate from the protected code.",
+      "expected_evidence": [
+        {
+          "version": "py311",
+          "source": "tutorial/errors.html",
+          "chunk_id": "py311_tutorial_errors_005"
+        }
+      ],
+      "answerable": true
+    },
+    {
+      "id": "q08",
+      "category": "paraphrased",
+      "question": "How does defaultdict behave when a requested key is missing?",
+      "expected_answer": "It calls its factory function to supply a value for a missing key.",
+      "expected_evidence": [
+        {
+          "version": "py311",
+          "source": "library/collections.html",
+          "chunk_id": "py311_library_collections_018"
+        }
+      ],
+      "answerable": true
+    },
+    {
+      "id": "q09",
+      "category": "paraphrased",
+      "question": "What problem does ExceptionGroup solve?",
+      "expected_answer": "ExceptionGroup allows multiple exception instances to be collected and raised together instead of stopping at the first exception.",
+      "expected_evidence": [
+        {
+          "version": "py311",
+          "source": "tutorial/errors.html",
+          "chunk_id": "py311_tutorial_errors_010"
+        }
+      ],
+      "answerable": true
+    },
+    {
+      "id": "q10",
+      "category": "paraphrased",
+      "question": "What is the effect of adding a note to an exception with add_note()?",
+      "expected_answer": "It adds a string to the exception's notes, and the standard traceback rendering includes those notes in the order they were added.",
+      "expected_evidence": [
+        {
+          "version": "py311",
+          "source": "tutorial/errors.html",
+          "chunk_id": "py311_tutorial_errors_012"
+        }
+      ],
+      "answerable": true
+    },
+    {
+      "id": "q11",
+      "category": "multi_document",
+      "question": "What is asyncio used for, and what new asyncio feature introduced in Python 3.11 helps manage a group of tasks?",
+      "expected_answer": "asyncio is used for concurrent asynchronous code using async/await. Python 3.11 added TaskGroup, an asynchronous context manager that holds a group of tasks and waits for them when it exits.",
+      "expected_evidence": [
+        {
+          "version": "py311",
+          "source": "library/asyncio.html",
+          "chunk_id": "py311_library_asyncio_000"
+        },
+        {
+          "version": "py311",
+          "source": "whatsnew/3.11.html",
+          "chunk_id": "py311_whatsnew_3.11_011"
+        }
+      ],
+      "answerable": true
+    },
+    {
+      "id": "q12",
+      "category": "multi_document",
+      "question": "How does Python 3.11's new exception functionality combine the ability to group errors with the ability to add information to an exception?",
+      "expected_answer": "Python 3.11 introduced ExceptionGroup for raising multiple exceptions together and added add_note() so additional information can be attached to an exception and shown in its traceback.",
+      "expected_evidence": [
+        {
+          "version": "py311",
+          "source": "whatsnew/3.11.html",
+          "chunk_id": "py311_whatsnew_3.11_002"
+        },
+        {
+          "version": "py311",
+          "source": "tutorial/errors.html",
+          "chunk_id": "py311_tutorial_errors_012"
+        }
+      ],
+      "answerable": true
+    },
+    {
+      "id": "q13",
+      "category": "multi_document",
+      "question": "What changed in Python 3.11 for pathlib globbing, and where is that behavior documented in the pathlib reference?",
+      "expected_answer": "In Python 3.11, glob() and rglob() return only directories when the pattern ends with a pathname component separator (sep or altsep). The pathlib reference documents this as a behavior changed in version 3.11.",
+      "expected_evidence": [
+        {
+          "version": "py311",
+          "source": "whatsnew/3.11.html",
+          "chunk_id": "py311_whatsnew_3.11_020"
+        },
+        {
+          "version": "py311",
+          "source": "library/pathlib.html",
+          "chunk_id": "py311_library_pathlib_015"
+        }
+      ],
+      "answerable": true
+    },
+    {
+      "id": "q14",
+      "category": "multi_document",
+      "question": "How do the Python 3.11 documentation's asyncio and pathlib pages illustrate two different kinds of standard-library functionality?",
+      "expected_answer": "asyncio provides high-level asynchronous and concurrent programming APIs, while pathlib provides object-oriented filesystem path handling. They address different problem domains within the standard library.",
+      "expected_evidence": [
+        {
+          "version": "py311",
+          "source": "library/asyncio.html",
+          "chunk_id": "py311_library_asyncio_000"
+        },
+        {
+          "version": "py311",
+          "source": "library/pathlib.html",
+          "chunk_id": "py311_library_pathlib_000"
+        }
+      ],
+      "answerable": true
+    },
+    {
+      "id": "q15",
+      "category": "version_sensitive",
+      "question": "Was distutils part of the standard library in Python 3.11, and what happened to it in Python 3.12?",
+      "expected_answer": "Python 3.11 documented the entire distutils package as pending removal in Python 3.12. Python 3.12 removed distutils from the standard library.",
+      "expected_evidence": [
+        {
+          "version": "py311",
+          "source": "whatsnew/3.11.html",
+          "chunk_id": "py311_whatsnew_3.11_043"
+        },
+        {
+          "version": "py312",
+          "source": "whatsnew/3.12.html",
+          "chunk_id": "py312_whatsnew_3.12_002"
+        }
+      ],
+      "answerable": true
+    },
+    {
+      "id": "q16",
+      "category": "version_sensitive",
+      "question": "What major restriction on f-string expressions was removed in Python 3.12 compared with Python 3.11?",
+      "expected_answer": "Python 3.12 formalized f-strings with PEP 701 and removed several restrictions: expressions can use the same quote as the enclosing f-string, span multiple lines, contain comments and backslashes, and use unicode escape sequences.",
+      "expected_evidence": [
+        {
+          "version": "py312",
+          "source": "whatsnew/3.12.html",
+          "chunk_id": "py312_whatsnew_3.12_004"
+        }
+      ],
+      "answerable": true
+    },
+    {
+      "id": "q17",
+      "category": "version_sensitive",
+      "question": "What new standard-library module was introduced in Python 3.11 for parsing TOML, and is the same change described as a new module in the Python 3.12 release highlights?",
+      "expected_answer": "Python 3.11 introduced tomllib for parsing TOML. Python 3.12's release notes describe the release as compared with 3.11 and do not introduce tomllib as a new module; it was already present.",
+      "expected_evidence": [
+        {
+          "version": "py311",
+          "source": "whatsnew/3.11.html",
+          "chunk_id": "py311_whatsnew_3.11_011"
+        }
+      ],
+      "answerable": true
+    },
+    {
+      "id": "q18",
+      "category": "version_sensitive",
+      "question": "How did Python 3.12 change f-string error reporting compared with Python 3.11?",
+      "expected_answer": "Python 3.12 parses f-strings with the PEG parser, producing more precise error messages that show the exact location in the full line rather than the older artificially parenthesized expression location.",
+      "expected_evidence": [
+        {
+          "version": "py312",
+          "source": "whatsnew/3.12.html",
+          "chunk_id": "py312_whatsnew_3.12_006"
+        }
+      ],
+      "answerable": true
+    },
+    {
+      "id": "q19",
+      "category": "unanswerable",
+      "question": "What was the exact worldwide number of Python developers in 2026?",
+      "expected_answer": null,
+      "expected_evidence": [],
+      "answerable": false,
+      "abstention_reason": "The selected Python 3.11/3.12 documentation corpus does not contain a worldwide developer population statistic."
+    },
+    {
+      "id": "q20",
+      "category": "unanswerable",
+      "question": "What was Python's exact market share among programming languages in 2026?",
+      "expected_answer": null,
+      "expected_evidence": [],
+      "answerable": false,
+      "abstention_reason": "The selected documentation corpus does not contain programming-language market-share statistics."
+    },
+    {
+      "id": "q21",
+      "category": "unanswerable",
+      "question": "What is the current price of a Python Software Foundation membership?",
+      "expected_answer": null,
+      "expected_evidence": [],
+      "answerable": false,
+      "abstention_reason": "The selected documentation pages do not provide current membership pricing."
+    },
+    {
+      "id": "q22",
+      "category": "unanswerable",
+      "question": "Which GPU model does the Python documentation recommend for training a large language model?",
+      "expected_answer": null,
+      "expected_evidence": [],
+      "answerable": false,
+      "abstention_reason": "The selected documentation corpus does not contain GPU recommendations for LLM training."
+    },
+    {
+      "id": "q23",
+      "category": "distractor",
+      "question": "According to the asyncio documentation, what is the current stock price of NVIDIA?",
+      "expected_answer": null,
+      "expected_evidence": [],
+      "answerable": false,
+      "abstention_reason": "The question contains a term from the corpus (asyncio) but asks for unrelated financial information that is not present."
+    },
+    {
+      "id": "q24",
+      "category": "distractor",
+      "question": "The pathlib documentation discusses filesystem paths. What is the population of the city where the Python Software Foundation is headquartered?",
+      "expected_answer": null,
+      "expected_evidence": [],
+      "answerable": false,
+      "abstention_reason": "The corpus discusses pathlib and identifies the Python Software Foundation in licensing/footer material, but it does not provide a city population statistic."
+    }
+  ]
+}

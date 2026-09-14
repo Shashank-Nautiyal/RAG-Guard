@@ -1,0 +1,358 @@
+id,category,question,answerable,expected_answer,expected_evidence,no_rag_answer,no_rag_time,rag_answer,retrieved_chunk_ids,retrieved_distances,retrieval_time,generation_time,total_time
+q01,direct,What is asyncio designed to help Python programs write?,True,"asyncio is a library for writing concurrent code using Python's async/await syntax, especially suited to IO-bound and high-level structured network code.","[{""version"": ""py311"", ""source"": ""library/asyncio.html"", ""chunk_id"": ""py311_library_asyncio_000""}]","Asyncio is designed to help Python programs write **asynchronous, non‑blocking code**—especially for I/O‑bound tasks such as networking, file handling, and concurrent operations—using an event loop and `async`/`await` coroutines.",0.979,"**Supporting evidence:**
+- “asyncio is a library to write concurrent code using the async/await syntax.”【py311_library_asyncio_000】
+
+**Answer:**
+asyncio is designed to help Python programs write concurrent code using the async/await syntax.【py311_library_asyncio_000】","[""py311_library_asyncio_000"", ""py312_library_asyncio_000"", ""py312_whatsnew_3.12_015""]","[0.3264, 0.3264, 0.348]",1.476,2.445,4.9
+q02,direct,What does Counter do in the collections module?,True,Counter is a dict subclass designed for counting hashable objects.,"[{""version"": ""py311"", ""source"": ""library/collections.html"", ""chunk_id"": ""py311_library_collections_000""}]","`collections.Counter` is a dictionary‑like subclass designed for counting hashable objects.  
+
+- **What it stores:** keys are the items being counted; values are the number of times each item appears.  
+- **How you create it:** `c = Counter(iterable)` or `c = Counter(mapping)` or `c = Counter(**kw)`.  
+- **Common operations:**  
+  - `c.update(other)` – add counts from another iterable or mapping.  
+  - `c.subtract(other)` – subtract counts.  
+  - `c.most_common([n])` – list the *n* most common elements (or all if *n* omitted).  
+  - `c.elements()` – iterator over elements, repeating each as many times as its count (ignores non‑positive counts).  
+  - Arithmetic & set‑like operations (`+`, `-`, `&`, `|`) combine counters element‑wise.  
+
+**Example**
+
+```python
+from collections import Counter
+
+words = ['apple', 'banana', 'apple', 'orange', 'banana', 'apple']
+c = Counter(words)          # Counter({'apple': 3, 'banana': 2, 'orange': 1})
+
+c['banana'] += 1            # now 3 bananas
+c.most_common(2)            # [('apple', 3), ('banana', 3)]
+list(c.elements())          # ['apple', 'apple', 'apple', 'banana', 'banana', 'banana', 'orange']
+```
+
+In short, `Counter` provides a fast, convenient way to tally occurrences of items.",1.507,"**Supporting evidence:**
+
+- “A Counter is a dict subclass for counting hashable objects.  
+  It is a collection where elements are stored as dictionary keys and their counts are stored as dictionary values.”【py311_library_collections_005】
+
+- “Counter objects have a dictionary interface except that they return a zero count for missing items instead of raising a KeyError.”【py311_library_collections_005】
+
+- “Setting a count to zero does not remove an element from a counter. Use del to remove it entirely.”【py311_library_collections_005】
+
+**Answer:**
+The `Counter` class in the `collections` module is a dictionary subclass designed to count hashable objects. It stores each distinct element as a key and its count as the corresponding value, returning a count of zero for items that are not present instead of raising a `KeyError`. It also provides dictionary‑like behavior, with special handling for zero counts and deletion of entries. 【py311_library_collections_005】","[""py311_library_collections_005"", ""py312_library_collections_005"", ""py312_library_collections_009""]","[0.4871, 0.4871, 0.5102]",0.022,1.376,2.905
+q03,direct,What does json.dumps() do?,True,json.dumps() serializes a Python object to a JSON-formatted string.,"[{""version"": ""py311"", ""source"": ""library/json.html"", ""chunk_id"": ""py311_library_json_003""}]","`json.dumps()` is a function in Python’s built‑in **json** module that **converts (serializes) a Python object into a JSON‑formatted string**.
+
+Typical usage:
+
+```python
+import json
+
+data = {""name"": ""Alice"", ""age"": 30, ""scores"": [85, 92, 78]}
+json_str = json.dumps(data)
+print(json_str)   # {""name"": ""Alice"", ""age"": 30, ""scores"": [85, 92, 78]}
+```
+
+Key points:
+
+- **Supported types**: `dict`, `list`, `tuple`, `str`, `int`, `float`, `bool`, `None`, and nested combinations of these.
+- **Returns**: a `str` containing the JSON representation.
+- **Common optional arguments**:
+  - `indent=4` – pretty‑prints with indentation.
+  - `separators=(',', ': ')` – control how items are separated.
+  - `ensure_ascii=False` – keep non‑ASCII characters as‑is instead of escaping them.
+  - `default=func` – a fallback function for objects that aren’t natively serializable.
+
+In short, `json.dumps()` turns Python data structures into a JSON string that can be written to a file, sent over a network, or stored for later use.",1.483,"**Supporting evidence:**
+- The documentation section titled *“Encoding basic Python object hierarchies:”* shows:
+
+  ```python
+  >>> json.dumps(['foo', {'bar': ('baz', None, 1.0, 2)}])
+  '[""foo"", {""bar"": [""baz"", null, 1.0, 2]}]'
+  ```
+
+  This demonstrates that `json.dumps()` takes a Python object (a list containing strings, dicts, tuples, etc.) and returns a JSON‑formatted string.
+
+- The *“Compact encoding:”* example also uses `json.dumps()` to produce a JSON string with no extra whitespace:
+
+  ```python
+  >>> json.dumps([1, 2, 3, {'4': 5, '6': 7}], separators=(',', ':'))
+  '[1,2,3,{""4"":5,""6"":7}]'
+  ```
+
+**Answer:**
+`json.dumps()` encodes (serializes) a Python object hierarchy into a JSON‑formatted string. It converts Python data structures such as lists, dictionaries, numbers, and strings into their JSON representation. [py311_library_json_000] (also present in the py312 version).","[""py311_library_json_000"", ""py312_library_json_000"", ""py312_library_json_005""]","[0.407, 0.407, 0.4654]",0.016,3.11,4.609
+q04,direct,When is re.search() preferred over re.match()?,True,re.search() is preferred when the desired match does not have to occur at the beginning of the string.,"[{""version"": ""py311"", ""source"": ""library/re.html"", ""chunk_id"": ""py311_library_re_036""}]","**Use `re.search()` when the pattern may appear anywhere in the string, not just at the start.**  
+
+- `re.match(pattern, string)` checks **only** from the beginning of `string`. If the pattern isn’t at position 0, it fails.  
+- `re.search(pattern, string)` scans the whole string and returns the first match it finds, regardless of its position.
+
+**Prefer `re.search()`** in cases such as:
+
+```python
+import re
+
+s = ""Error: file not found""
+# Look for the word ""file"" anywhere in the line
+m = re.search(r'file', s)   # succeeds
+```
+
+**Prefer `re.match()`** only when you explicitly need the match to start at the very beginning of the text:
+
+```python
+m = re.match(r'Error', s)   # succeeds because the string starts with ""Error""
+```
+
+In short: choose `re.search()` for “find anywhere” and `re.match()` for “must start at the first character.”",1.042,"**Supporting evidence:**
+
+- “If you want to locate a match anywhere in string, use **search()** instead (see also search() vs. match()).”【py312_library_re_022】  
+- “Note that even in MULTILINE mode, **re.match()** will only match at the beginning of the string and not at the beginning of each line.”【py312_library_re_022】
+
+**Answer:**  
+`re.search()` is preferred when you need to find a match **anywhere** in the target string, because `re.match()` is limited to matching only at the start of the string (even with the MULTILINE flag).【py312_library_re_022】","[""py312_library_re_022"", ""py311_library_re_022"", ""py311_library_re_029""]","[0.3104, 0.3354, 0.3916]",0.032,1.539,2.613
+q05,direct,What does the pathlib Path class provide?,True,"Path provides object-oriented filesystem path handling, including operations such as checking paths and opening files.","[{""version"": ""py311"", ""source"": ""library/pathlib.html"", ""chunk_id"": ""py311_library_pathlib_000""}]","The **`pathlib.Path`** class is a high‑level, object‑oriented interface for filesystem paths. It provides:
+
+* **Unified path handling** for Windows, POSIX, and other platforms via a single class (`Path`, `PosixPath`, `WindowsPath`).
+* **Path construction & manipulation** – overloads `/` (or `joinpath`) to concatenate parts, and offers properties like `.name`, `.stem`, `.suffix`, `.parent`, `.parts`, etc.
+* **File‑system operations** – methods such as `.exists()`, `.is_file()`, `.is_dir()`, `.mkdir()`, `.rmdir()`, `.unlink()`, `.rename()`, `.replace()`, `.touch()`.
+* **Reading & writing** – convenient helpers like `.read_text()`, `.write_text()`, `.read_bytes()`, `.write_bytes()`, and `.open()` for custom modes.
+* **Directory traversal** – `.iterdir()`, `.glob()`, `.rglob()` for pattern‑based iteration, plus `.walk()`‑style recursion via `rglob`.
+* **Metadata access** – `.stat()`, `.owner()`, `.group()`, `.chmod()`, `.chmod()`, and convenience properties like `.size`, `.mtime`, `.atime`, `.ctime`.
+* **Convenient conversions** – `Path` can be cast to `str`, used directly with many standard‑library functions that expect a path string, and interoperates with `os` and `shutil` utilities.
+* **Context‑manager support** – can be used with `with Path(...).open(...) as f:` for safe file handling.
+
+Overall, `pathlib.Path` replaces many `os.path` and `os` functions with a clean, chainable API that makes path manipulation and file I/O more readable and Pythonic.",4.597,"**Supporting evidence:**
+
+- “Path classes are divided between pure paths, which provide purely computational operations without I/O, and **concrete paths, which inherit from pure paths but also provide I/O operations**.”  
+- “If you’ve never used this module before or just aren’t sure which class is right for your task, **Path is most likely what you need. It instantiates a concrete path for the platform the code is running on**.”  
+- “Concrete paths are subclasses of the pure path classes. **In addition to operations provided by the latter, they also provide methods to do system calls on path objects**.”  
+
+**Answer:**  
+The `pathlib.Path` class is a concrete path class that creates a path object appropriate for the current operating system. It inherits the computational features of the pure path classes and adds I/O capabilities and methods that perform system calls on the path (e.g., checking existence, opening files, resolving links). [py312_library_pathlib_000][py312_library_pathlib_009]","[""py312_library_pathlib_000"", ""py311_library_pathlib_000"", ""py312_library_pathlib_009""]","[0.2737, 0.2772, 0.3308]",0.023,18.345,22.965
+q06,paraphrased,"If a program needs to run several coroutines concurrently and manage their execution, which Python library is intended for that purpose?",True,asyncio.,"[{""version"": ""py311"", ""source"": ""library/asyncio.html"", ""chunk_id"": ""py311_library_asyncio_000""}]",The standard library for running and managing multiple coroutines concurrently in Python is **`asyncio`**.,2.782,"**Supporting evidence:**
+- “asyncio provides a set of high‑level APIs to: - run Python coroutines concurrently and have full control over their execution; …”【py311_library_asyncio_000】
+
+**Answer:**  
+The `asyncio` library is intended for running several coroutines concurrently and managing their execution.【py311_library_asyncio_000】","[""py311_library_asyncio_000"", ""py312_library_asyncio_000"", ""py312_library_os_077""]","[0.3978, 0.3978, 0.4804]",0.041,14.425,17.248
+q07,paraphrased,"In a try/except construct, what is the purpose of the else clause?",True,The else clause runs when no exception occurs in the try clause. It can keep code that should run only after a successful try separate from the protected code.,"[{""version"": ""py311"", ""source"": ""tutorial/errors.html"", ""chunk_id"": ""py311_tutorial_errors_005""}]","The `else` block runs **only when the `try` block finishes without raising any exception**.  
+
+- It lets you separate code that should execute **only if the operation succeeded** from the code that might raise the exception (which belongs in the `try`).  
+- This makes the intent clearer and avoids catching exceptions that you didn’t expect.  
+
+Typical use‑case:
+
+```python
+try:
+    data = open('file.txt').read()   # may raise IOError
+except IOError as e:
+    handle_error(e)
+else:
+    process(data)                    # runs only if the file was read successfully
+```
+
+If an exception occurs, the `except` block handles it and the `else` block is skipped. If no exception occurs, the `else` block runs, and then any `finally` block (if present) runs afterward.",1.209,"**Supporting evidence:**
+
+> ""a try statement’s else clause runs when no exception occurs""  
+> — *py312_tutorial_controlflow_005*
+
+**Answer:**
+
+In a `try/except` construct, the `else` clause contains code that is executed only if the `try` block completes without raising any exception. It allows you to separate the normal‑execution path from the exception‑handling code. [py312_tutorial_controlflow_005]","[""py311_reference_compound_stmts_004"", ""py312_tutorial_controlflow_005"", ""py312_reference_compound_stmts_004""]","[0.4168, 0.4381, 0.4395]",0.029,11.042,12.28
+q08,paraphrased,How does defaultdict behave when a requested key is missing?,True,It calls its factory function to supply a value for a missing key.,"[{""version"": ""py311"", ""source"": ""library/collections.html"", ""chunk_id"": ""py311_library_collections_018""}]","`defaultdict` (from `collections`) overrides the normal dictionary’s `__getitem__` behavior.  
+
+- When you access a key that **does not exist**, `defaultdict` calls its **`default_factory`** function.  
+- The result of that call is inserted into the dictionary under the missing key, and the same value is returned to the caller.  
+
+So the missing key is automatically created with a default value instead of raising a `KeyError`.  
+
+If the `default_factory` is set to **`None`** (the same as a regular `dict`), the usual `KeyError` is raised for missing keys.  
+
+**Example**
+
+```python
+from collections import defaultdict
+
+# default_factory creates an empty list for each new key
+d = defaultdict(list)
+
+d['a'].append(1)   # 'a' didn't exist, so [] is created, then 1 is appended
+print(d)           # defaultdict(<class 'list'>, {'a': [1]})
+
+# default_factory creates 0 for each new key
+c = defaultdict(int)
+print(c['missing'])  # 0, and the key 'missing' is now in the dict
+```
+
+In short: a missing key triggers the `default_factory` to generate and store a default value, preventing a `KeyError` (unless `default_factory` is `None`).",3.727,"**Supporting evidence:**
+
+- “This method is called by the __getitem__() method of the dict class when the requested key is not found; whatever it returns or raises is then returned or raised by __getitem__().”  
+- “Note that __missing__() is not called for any operations besides __getitem__() . This means that get() will, like normal dictionaries, return None as a default rather than using default_factory .”  
+- “If calling default_factory raises an exception this exception is propagated unchanged.”  
+
+**Answer:**  
+When a key is missing, `defaultdict`’s `__missing__` method is invoked by `__getitem__`. It uses the `default_factory` to create a default value, inserts that value for the missing key, and returns it. The `get()` method does **not** trigger `default_factory` and instead returns `None` like a normal dict. If the `default_factory` itself raises an exception, that exception is propagated unchanged.  
+[py311_library_collections_017] & [py312_library_collections_017]","[""py311_library_collections_017"", ""py312_library_collections_017"", ""py311_whatsnew_3.11_004""]","[0.3275, 0.3275, 0.4443]",0.026,16.127,19.88
+q09,paraphrased,What problem does ExceptionGroup solve?,True,ExceptionGroup allows multiple exception instances to be collected and raised together instead of stopping at the first exception.,"[{""version"": ""py311"", ""source"": ""tutorial/errors.html"", ""chunk_id"": ""py311_tutorial_errors_010""}]","ExceptionGroup was introduced to let a program **represent and handle multiple exceptions that occur at the same time**—something the traditional single‑exception model can’t do cleanly.
+
+* **Concurrent code** (e.g., `asyncio.gather`, thread pools, multiprocessing) often runs many tasks in parallel. When several of those tasks fail, only the first exception would normally be propagated, silently discarding the others.
+* **Exception chaining** (`raise ... from ...`) can link one cause to another, but it still represents a linear chain, not a set of independent failures.
+* **Error‑aggregation APIs** (like `concurrent.futures.wait` or `asyncio.gather(..., return_exceptions=True)`) needed a uniform way to surface all the failures together.
+
+`ExceptionGroup` solves this by:
+
+1. **Bundling** any number of exception instances into a single object.
+2. Providing **structured introspection** (`.exceptions`, `.split()`, `except*` syntax) so callers can catch, filter, or process subsets of the contained errors.
+3. Preserving the full traceback and context of each individual exception, so no diagnostic information is lost.
+
+In short, ExceptionGroup enables robust, expressive handling of *multiple simultaneous errors*—particularly in asynchronous or parallel programming—without sacrificing any exception details.",4.64,I don't have enough information in the provided context to answer this.,"[""py311_reference_compound_stmts_007"", ""py311_reference_compound_stmts_006"", ""py312_reference_compound_stmts_006""]","[0.471, 0.483, 0.483]",0.024,16.309,20.973
+q10,paraphrased,What is the effect of adding a note to an exception with add_note()?,True,"It adds a string to the exception's notes, and the standard traceback rendering includes those notes in the order they were added.","[{""version"": ""py311"", ""source"": ""tutorial/errors.html"", ""chunk_id"": ""py311_tutorial_errors_012""}]","`add_note()` attaches an extra piece of text to the exception’s **`__notes__`** list. When the exception is printed (e.g., in a traceback), each note is shown after the main error message, giving you a convenient way to add contextual information without changing the exception type or its handling. It’s purely for richer diagnostics.",1.963,"**Supporting evidence:**
+
+- “exceptions have a method **add_note(note)** that accepts a string and **adds it to the exception’s notes list**. **The standard traceback rendering includes all notes, in the order they were added, after the exception**.”【py311_tutorial_errors_012】
+
+- “The **add_note() method** is added to **BaseException**. It can be used to **enrich exceptions with context information** that is not available at the time when the exception is raised. **The added notes appear in the default traceback**.”【py311_whatsnew_3.11_002】
+
+**Answer:**
+Calling `add_note()` on an exception stores the given string in the exception’s internal notes list. When the exception is later displayed, the traceback automatically prints all of those notes, in the order they were added, after the exception’s main message. This allows developers to enrich an exception with additional context after it has been caught.【py311_tutorial_errors_012】【py311_whatsnew_3.11_002】","[""py311_tutorial_errors_012"", ""py312_tutorial_errors_012"", ""py311_whatsnew_3.11_002""]","[0.3203, 0.3203, 0.4081]",0.024,13.224,15.211
+q11,multi_document,"What is asyncio used for, and what new asyncio feature introduced in Python 3.11 helps manage a group of tasks?",True,"asyncio is used for concurrent asynchronous code using async/await. Python 3.11 added TaskGroup, an asynchronous context manager that holds a group of tasks and waits for them when it exits.","[{""version"": ""py311"", ""source"": ""library/asyncio.html"", ""chunk_id"": ""py311_library_asyncio_000""}, {""version"": ""py311"", ""source"": ""whatsnew/3.11.html"", ""chunk_id"": ""py311_whatsnew_3.11_011""}]","**asyncio** is Python’s standard library for writing single‑threaded concurrent code using **asynchronous I/O**. It lets you define `async` functions (coroutines) that can pause while waiting for I/O (network, disk, subprocesses, etc.) and let other coroutines run, enabling high‑performance networking servers, clients, and other I/O‑bound programs without the complexity of threads.
+
+**New in Python 3.11:** the **`asyncio.TaskGroup`** class.  
+`TaskGroup` provides a structured‑concurrency context manager that automatically creates, tracks, and cleanly shuts down a collection of tasks, propagating exceptions and ensuring all tasks finish before the group exits. This makes it easier to manage multiple concurrent tasks as a single logical unit.",0.997,I don't have enough information in the provided context to answer this.,"[""py312_whatsnew_3.12_015"", ""py311_library_asyncio_000"", ""py312_library_asyncio_000""]","[0.3182, 0.3426, 0.3426]",0.022,19.047,20.066
+q12,multi_document,How does Python 3.11's new exception functionality combine the ability to group errors with the ability to add information to an exception?,True,Python 3.11 introduced ExceptionGroup for raising multiple exceptions together and added add_note() so additional information can be attached to an exception and shown in its traceback.,"[{""version"": ""py311"", ""source"": ""whatsnew/3.11.html"", ""chunk_id"": ""py311_whatsnew_3.11_002""}, {""version"": ""py311"", ""source"": ""tutorial/errors.html"", ""chunk_id"": ""py311_tutorial_errors_012""}]","Python 3.11 introduced two complementary enhancements to the exception hierarchy:
+
+| Feature | What it adds | How it is used |
+|---------|--------------|----------------|
+| **Exception groups** (PEP 654) | A new `ExceptionGroup` type that can hold many exceptions and the `except*` clause to handle them individually. | `raise ExceptionGroup(""multiple failures"", [exc1, exc2, …])` |
+| **Exception notes** (PEP 678) | A `BaseException.add_note()` method that stores arbitrary strings on an exception object. The notes are displayed when the traceback is printed. | `exc.add_note(""additional context"")` |
+
+### Combining the two
+
+*Each exception inside an `ExceptionGroup` is a normal `BaseException` subclass, so it can receive notes.*  
+You can also attach notes to the **group object itself**. This gives you:
+
+1. **Grouped error handling** – you can catch and iterate over the individual failures with `except*`.
+2. **Rich per‑error context** – each failure can carry its own explanatory notes.
+3. **Group‑level context** – the whole collection can have a note that applies to the whole operation (e.g., “failed while processing batch 42”).
+
+#### Example
+
+```python
+def task(i):
+    try:
+        if i % 2:
+            raise ValueError(f""odd value {i}"")
+        else:
+            raise TypeError(f""even value {i}"")
+    except Exception as exc:
+        exc.add_note(f""task index = {i}"")
+        return exc
+
+errors = [task(i) for i in range(4)]
+
+# Create a group and give it a group‑level note
+group = ExceptionGroup(""batch failure"", errors)
+group.add_note(""batch id = 7"")
+
+raise group
+```
+
+When the exception propagates, the printed traceback looks roughly like:
+
+```
+ExceptionGroup: batch failure (3 sub-exceptions)
+  ├─ ValueError: odd value 1
+  │   └─ Note: task index = 1
+  ├─ TypeError: even value 2
+  │   └─ Note: task index = 2
+  └─ ValueError: odd value 3
+      └─ Note: task index = 3
+Note: batch id = 7
+```
+
+Thus, Python 3.11 lets you **group multiple failures** while still **attaching arbitrary diagnostic information** to each individual exception and to the group as a whole. This combination makes debugging of concurrent or batch‑style code far more informative.",5.308,"**Supporting evidence:**
+
+- “PEP 654 introduces language features that enable a program to raise and handle multiple unrelated exceptions simultaneously. The builtin types **ExceptionGroup** and **BaseExceptionGroup** make it possible to **group exceptions and raise them together**…” [py311_whatsnew_3.11_002]
+
+- “For this purpose, exceptions have a method **add_note(note)** that accepts a string and adds it to the exception’s notes list. The standard traceback rendering includes all notes, in the order they were added, after the exception.” [py311_tutorial_errors_012]
+
+- “For example, when **collecting exceptions into an exception group**, we may want to **add context information for the individual errors**. In the following each exception in the group has a note indicating when this error has occurred.” [py311_tutorial_errors_012]
+
+**Answer:**
+
+Python 3.11 adds the `ExceptionGroup` type (PEP 654) so that several unrelated exceptions can be gathered and raised as a single group. At the same time, the `BaseException.add_note()` method (PEP 678) lets a caught exception be enriched with arbitrary textual notes. By adding notes to each individual exception before placing them in an `ExceptionGroup`, a program can both **group multiple errors together** and **attach additional context information to each error**, and the resulting traceback will display the grouped exceptions along with their respective notes. [py311_whatsnew_3.11_002][py311_tutorial_errors_012]","[""py311_whatsnew_3.11_002"", ""py311_tutorial_errors_012"", ""py312_tutorial_errors_012""]","[0.2774, 0.2814, 0.2814]",0.022,19.583,24.913
+q13,multi_document,"What changed in Python 3.11 for pathlib globbing, and where is that behavior documented in the pathlib reference?",True,"In Python 3.11, glob() and rglob() return only directories when the pattern ends with a pathname component separator (sep or altsep). The pathlib reference documents this as a behavior changed in version 3.11.","[{""version"": ""py311"", ""source"": ""whatsnew/3.11.html"", ""chunk_id"": ""py311_whatsnew_3.11_020""}, {""version"": ""py311"", ""source"": ""library/pathlib.html"", ""chunk_id"": ""py311_library_pathlib_015""}]","**What changed in Python 3.11**
+
+Starting with Python 3.11 the `Path.glob()` / `Path.rglob()` methods were updated to **include hidden files and directories (names that start with a dot) in the results when the pattern does not explicitly exclude them**. In earlier releases a pattern such as `**/*.py` would skip files like `.hidden.py`; from 3.11 onward those “dot‑files” are returned just like the standard `glob` module does.
+
+**Where it’s documented**
+
+The change is recorded in the official *pathlib* reference under the entry for **`Path.glob(pattern)`** (and consequently `Path.rglob`). In the method’s description you’ll find a note similar to:
+
+> *Since Python 3.11, glob patterns also match hidden files and directories (those whose names start with a dot) unless the pattern explicitly excludes them.*
+
+That note appears in the “Path.glob()” section of the `pathlib` documentation (e.g., the “Path objects – pathlib” page).",5.577,"**Supporting evidence:**
+
+- “Changed in version 3.11: Return only directories if pattern ends with a pathname components separator ( sep or altsep ).”【py311_library_pathlib_015】
+- “Changed in version 3.11: Return only directories if pattern ends with a pathname components separator ( sep or altsep ).”【py311_library_pathlib_010】
+
+**Answer:**
+In Python 3.11 the behavior of `Path.glob()` (and `Path.rglob()`) was changed so that when the glob pattern ends with a path‑separator character (`sep` or `altsep`), the method returns only directory entries rather than both files and directories. This change is documented in the pathlib reference in the description of the `Path.glob` (and `Path.rglob`) methods, marked with the note “Changed in version 3.11: Return only directories if pattern ends with a pathname components separator (sep or altsep).”【py311_library_pathlib_015】【py311_library_pathlib_010】","[""py311_library_pathlib_015"", ""py311_library_pathlib_010"", ""py312_library_pathlib_015""]","[0.2959, 0.4189, 0.4189]",0.027,19.489,25.093
+q14,multi_document,How do the Python 3.11 documentation's asyncio and pathlib pages illustrate two different kinds of standard-library functionality?,True,"asyncio provides high-level asynchronous and concurrent programming APIs, while pathlib provides object-oriented filesystem path handling. They address different problem domains within the standard library.","[{""version"": ""py311"", ""source"": ""library/asyncio.html"", ""chunk_id"": ""py311_library_asyncio_000""}, {""version"": ""py311"", ""source"": ""library/pathlib.html"", ""chunk_id"": ""py311_library_pathlib_000""}]","The two pages showcase two distinct “flavors” of what the standard library can provide:
+
+| Documentation page | Kind of functionality it demonstrates | What the page emphasizes |
+|--------------------|----------------------------------------|--------------------------|
+| **`asyncio`** (Python 3.11) | **Concurrency framework** – a set of *runtime primitives* for asynchronous I/O and cooperative multitasking. | • Event‑loop architecture<br>• Coroutines, `await`, `async def`<br>• Tasks, futures, transports, protocols<br>• High‑level APIs (`asyncio.run`, `gather`, `wait`, etc.) that let you *orchestrate* many operations without blocking. |
+| **`pathlib`** (Python 3.11) | **Object‑oriented data‑type library** – a convenient, high‑level wrapper around filesystem paths. | • The `Path` class representing a path as an immutable object<br>• Methods for path manipulation (`/`, `.joinpath()`, `.parent`, `.stem`, …)<br>• File‑system operations (`read_text()`, `write_bytes()`, `iterdir()`, `glob()`, …) that act directly on the `Path` objects. |
+
+**In short:**  
+
+- The **`asyncio`** page illustrates a *behavior‑oriented* part of the library: it provides a **framework** for managing *how* code runs (asynchronously, with an event loop, tasks, etc.).  
+- The **`pathlib`** page illustrates a *data‑oriented* part of the library: it offers a **rich, object‑oriented API** for *what* you work with (filesystem paths) and the operations you can perform on them.
+
+Together they show that the Python standard library includes both **execution‑control tools** (like `asyncio`) and **domain‑specific data abstractions** (like `pathlib`).",6.078,I don't have enough information in the provided context to answer this.,"[""py312_whatsnew_3.12_000"", ""py311_reference_import_030"", ""py312_reference_import_028""]","[0.4292, 0.4722, 0.4722]",0.036,15.203,21.317
+q15,version_sensitive,"Was distutils part of the standard library in Python 3.11, and what happened to it in Python 3.12?",True,Python 3.11 documented the entire distutils package as pending removal in Python 3.12. Python 3.12 removed distutils from the standard library.,"[{""version"": ""py311"", ""source"": ""whatsnew/3.11.html"", ""chunk_id"": ""py311_whatsnew_3.11_043""}, {""version"": ""py312"", ""source"": ""whatsnew/3.12.html"", ""chunk_id"": ""py312_whatsnew_3.12_002""}]","Yes. `distutils` was still included in the Python 3.11 standard library, but it had been deprecated for a few releases. In Python 3.12 the module was removed entirely from the standard library; projects are now expected to use alternatives such as **setuptools**, **wheel**, or **flit** for building and installing packages.",1.254,I don't have enough information in the provided context to answer this.,"[""py312_whatsnew_3.12_000"", ""py312_whatsnew_3.12_042"", ""py311_whatsnew_3.11_039""]","[0.2834, 0.402, 0.4066]",0.024,14.315,15.593
+q16,version_sensitive,What major restriction on f-string expressions was removed in Python 3.12 compared with Python 3.11?,True,"Python 3.12 formalized f-strings with PEP 701 and removed several restrictions: expressions can use the same quote as the enclosing f-string, span multiple lines, contain comments and backslashes, and use unicode escape sequences.","[{""version"": ""py312"", ""source"": ""whatsnew/3.12.html"", ""chunk_id"": ""py312_whatsnew_3.12_004""}]","The ban on using backslashes inside the expression part of an f‑string was lifted—Python 3.12 now permits backslashes in f‑string expressions, a restriction that existed in 3.11.",4.161,I don't have enough information in the provided context to answer this.,"[""py312_whatsnew_3.12_000"", ""py312_library_json_007"", ""py312_whatsnew_3.12_006""]","[0.3673, 0.3924, 0.4091]",0.025,15.43,19.616
+q17,version_sensitive,"What new standard-library module was introduced in Python 3.11 for parsing TOML, and is the same change described as a new module in the Python 3.12 release highlights?",True,Python 3.11 introduced tomllib for parsing TOML. Python 3.12's release notes describe the release as compared with 3.11 and do not introduce tomllib as a new module; it was already present.,"[{""version"": ""py311"", ""source"": ""whatsnew/3.11.html"", ""chunk_id"": ""py311_whatsnew_3.11_011""}]","The new standard‑library module is **`tomllib`**, added in Python 3.11 for parsing TOML files. The Python 3.12 release highlights also list `tomllib` as a new module.",2.957,"**Supporting evidence:**
+
+- Python 3.11 “New standard library modules” entry:  
+  *“PEP 680 : tomllib — Support for parsing TOML in the Standard Library”*【py311_whatsnew_3.11_000】  
+
+- Python 3.12 release highlights list new syntax features, grammar features, and interpreter improvements, but do **not** mention a TOML‑parsing module:  
+  *“New syntax features: – PEP 695 , type parameter syntax and the type statement”*  
+  *“New grammar features: – PEP 701 , f-strings in the grammar”*  
+  *“Interpreter improvements: – PEP 684 , a unique per-interpreter GIL …”*【py312_whatsnew_3.12_000】  
+
+**Answer:**  
+The new standard‑library module introduced in Python 3.11 for parsing TOML is **`tomllib`**. The Python 3.12 release highlights do **not** describe `tomllib` as a new module. 【py311_whatsnew_3.11_000】【py312_whatsnew_3.12_000】","[""py311_whatsnew_3.11_000"", ""py312_whatsnew_3.12_000"", ""py311_whatsnew_3.11_043""]","[0.3102, 0.4286, 0.5035]",0.023,21.101,24.081
+q18,version_sensitive,How did Python 3.12 change f-string error reporting compared with Python 3.11?,True,"Python 3.12 parses f-strings with the PEG parser, producing more precise error messages that show the exact location in the full line rather than the older artificially parenthesized expression location.","[{""version"": ""py312"", ""source"": ""whatsnew/3.12.html"", ""chunk_id"": ""py312_whatsnew_3.12_006""}]","**Python 3.12 vs. 3.11 – f‑string error reporting**
+
+| Aspect | Python 3.11 | Python 3.12 |
+|--------|-------------|-------------|
+| **Location of the error** | The traceback pointed to the *whole* f‑string literal, making it hard to see which sub‑expression caused the failure. | The compiler now highlights the **exact sub‑expression** (or brace) that triggered the syntax error, so you can spot the problem instantly. |
+| **Message clarity** | Generic messages such as “invalid syntax” or “f‑string: unexpected ‘}’”. | More descriptive diagnostics, e.g. “f‑string: unmatched ‘}’ at position 12”, “f‑string: cannot use backslash in expression”, or “f‑string: invalid conversion flag ‘!x’”. |
+| **Backslash handling** | Backslashes inside the expression part produced a generic syntax‑error message. | The error now explicitly says “f‑string expression cannot contain a backslash”. |
+| **Conversion flags & format specifiers** | Errors in conversion flags (`!r`, `!s`, `!a`) or format spec (`:`) were often reported as “invalid syntax”. | The parser validates conversion flags and format specifiers separately and reports the precise problem (e.g., “unknown conversion flag ‘!z’”). |
+| **Nested braces** | Mis‑matched braces inside the expression gave a vague “invalid syntax”. | The parser detects the mismatched brace and reports its exact location, e.g., “f‑string: unmatched ‘{’ in expression”. |
+| **Expression evaluation errors** | Runtime errors (e.g., NameError) were shown as coming from the whole f‑string. | The traceback now includes the **inner expression** source line, making it clear which variable or call failed. |
+| **PEP 701 implementation** | Not yet applied – f‑strings were limited to a single line and required parentheses for complex expressions. | With PEP 701, f‑strings can span multiple lines and contain arbitrary Python expressions; error messages reflect the new syntax and still point to the offending part. |
+
+**In short:** Python 3.12 makes f‑string syntax errors far more precise—both in *where* the error is reported (the exact character/substring) and *what* the message says (specific to unmatched braces, illegal backslashes, bad conversion flags, etc.). This is a noticeable improvement over the more generic, less helpful diagnostics of Python 3.11.",6.678,"**Supporting evidence:**
+
+- “As a positive side‑effect of how this feature has been implemented (by parsing f‑strings with the PEG parser), now error messages for f‑strings are more precise and include the exact location of the error.”  
+- “In Python 3.11, the following f‑string raises a SyntaxError … but the error message doesn’t include the exact location of the error within the line and also has the expression artificially surrounded by parentheses.”  
+- “In Python 3.12, as f‑strings are parsed with the PEG parser, error messages can be more precise and show the entire line:”  
+
+**Answer:**
+Python 3.12 parses f‑strings with the new PEG parser, which makes the syntax‑error messages for f‑strings more precise: they now point to the exact location of the problem and display the full line of code. In contrast, Python 3.11’s f‑string errors did not show the exact location and wrapped the offending expression in parentheses. [py312_whatsnew_3.12_006]","[""py312_whatsnew_3.12_000"", ""py312_whatsnew_3.12_006"", ""py312_library_json_007""]","[0.3855, 0.3926, 0.4138]",0.021,17.154,23.853
+q19,unanswerable,What was the exact worldwide number of Python developers in 2026?,False,,[],I’m not aware of an exact worldwide count of Python developers for 2026.,8.508,I don't have enough information in the provided context to answer this.,"[""py311_whatsnew_3.11_000"", ""py311_library_typing_058"", ""py311_whatsnew_3.11_048""]","[0.5893, 0.5927, 0.5952]",0.025,6.291,14.824
+q20,unanswerable,What was Python's exact market share among programming languages in 2026?,False,,[],"I’m sorry, but I don’t have information on Python’s market share for 2026.",2.324,I don't have enough information in the provided context to answer this.,"[""py311_whatsnew_3.11_031"", ""py311_whatsnew_3.11_032"", ""py311_whatsnew_3.11_033""]","[0.5595, 0.5697, 0.5713]",0.024,19.078,21.426
+q21,unanswerable,What is the current price of a Python Software Foundation membership?,False,,[],"The Python Software Foundation’s standard individual membership costs **$30 per year**.  
+
+Other membership tiers are also offered:
+
+| Membership type | Annual fee |
+|-----------------|------------|
+| Supporting      | $100 |
+| Corporate       | $200 |
+
+(Fees are listed on the PSF website and are subject to change.)",1.019,I don't have enough information in the provided context to answer this.,"[""py311_whatsnew_3.11_031"", ""py312_library_sys_040"", ""py311_library_sys_026""]","[0.6721, 0.6946, 0.6946]",0.024,7.119,8.162
+q22,unanswerable,Which GPU model does the Python documentation recommend for training a large language model?,False,,[],"The official Python documentation does not recommend any specific GPU model for training large language models. It focuses on the language itself and leaves hardware choices (such as which GPU to use) up to the user and the libraries they employ (e.g., PyTorch, TensorFlow).",7.262,I don't have enough information in the provided context to answer this.,"[""py311_whatsnew_3.11_000"", ""py312_whatsnew_3.12_027"", ""py311_whatsnew_3.11_031""]","[0.623, 0.6257, 0.6312]",0.022,10.13,17.414
+q23,distractor,"According to the asyncio documentation, what is the current stock price of NVIDIA?",False,,[],"I’m sorry, but I can’t provide that information.",2.031,I don't have enough information in the provided context to answer this.,"[""py311_library_sys_033"", ""py312_whatsnew_3.12_015"", ""py311_library_sys_019""]","[0.675, 0.6855, 0.7439]",0.022,13.404,15.457
+q24,distractor,The pathlib documentation discusses filesystem paths. What is the population of the city where the Python Software Foundation is headquartered?,False,,[],"The Python Software Foundation is headquartered in **Beaverton, Oregon**, which has a population of roughly **107 000 people** (2020 Census figure).",0.84,I don't have enough information in the provided context to answer this.,"[""py312_library_pathlib_000"", ""py311_library_pathlib_000"", ""py311_library_pathlib_009""]","[0.4312, 0.4347, 0.4479]",0.02,16.126,16.986
